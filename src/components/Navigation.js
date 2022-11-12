@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 export function Navigation (props) {
     const [navItems, setNavItems] = useState([])
     useEffect( () => {
-        if (navItems.length = 0){
+        if (navItems.length == 0){
             setNavItems(props.items)
         }
     }, [props.items] )
@@ -10,7 +10,7 @@ export function Navigation (props) {
     if(navItems.length > 0){
         const NavLinks = navItems.map( (item) => {
             return(
-                <a href="item.path" className="nav-link">{item.name}</a>
+                <a href={item.path}  className="nav-link">{item.name}</a>
 
             )
         })
