@@ -12,8 +12,22 @@ import { Signup } from './pages/Signup'
 import { initializeApp } from "firebase/app";
 import { FirebaseConfig } from './config/FirebaseConfig';
 
+//import firebase auth
+import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
+
 //initialise Firebase 
-const app = initializeApp(FirebaseConfig);
+const FBapp = initializeApp(FirebaseConfig);
+//initialise Firebase auth
+const FBauth = getAuth(FBapp) 
+
+//function to create user account
+const signup = (email, password) => {
+  return new Promise (( resolve, reject )=> {
+    createUserWithEmailAndPassword(FBauth,email, password)
+    .then((userCredential) => resolve(userCredential.user))
+    .catch((error) => reject(error))
+  })
+}
 
 const NavData = [
   {name: "Home", path: "/", public: true},
@@ -31,7 +45,7 @@ function App() {
         <Route path ="/" element = {<Home/>} />
         <Route path ="/about" element = {<About/>} />
         <Route path ="/contact" element = {<Contact/>} />
-        <Route path='/signup' element = {<Signup/>}/>
+        <Route path='/signup' element = {<Signup handler = {signup}/>}/>
       </Routes>
       <Footer year = "2022" /> 
     </div>
